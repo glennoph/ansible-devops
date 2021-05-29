@@ -1,0 +1,124 @@
+
+
+
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ vagrant --version
+Vagrant 2.2.14
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ vagrant up
+Bringing machine 'app1' up with 'virtualbox' provider...
+Bringing machine 'app2' up with 'virtualbox' provider...
+Bringing machine 'db' up with 'virtualbox' provider...
+==> app1: Checking if box 'geerlingguy/centos8' version '1.0.7' is up to date...
+==> app1: Clearing any previously set forwarded ports...
+==> app1: Clearing any previously set network interfaces...
+==> app1: Preparing network interfaces based on configuration...
+    app1: Adapter 1: nat
+    app1: Adapter 2: hostonly
+==> app1: Forwarding ports...
+    app1: 22 (guest) => 2222 (host) (adapter 1)
+==> app1: Running 'pre-boot' VM customizations...
+==> app1: Booting VM...
+==> app1: Waiting for machine to boot. This may take a few minutes...
+    app1: SSH address: 127.0.0.1:2222
+    app1: SSH username: vagrant
+    app1: SSH auth method: private key
+==> app1: Machine booted and ready!
+[app1] GuestAdditions versions on your host (6.1.22) and guest (6.1.16) do not match.
+Last metadata expiration check: 0:12:20 ago on Sat 29 May 2021 03:53:16 PM UTC.
+Package centos-linux-release-8.3-1.2011.el8.noarch is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+Last metadata expiration check: 0:12:21 ago on Sat 29 May 2021 03:53:16 PM UTC.
+No match for argument: kernel-devel-4.18.0-193.28.1.el8_2.x86_64
+Error: Unable to find a match: kernel-devel-4.18.0-193.28.1.el8_2.x86_64
+Unmounting Virtualbox Guest Additions ISO from: /mnt
+umount: /mnt: not mounted.
+==> app1: Checking for guest additions in VM...
+The following SSH command responded with a non-zero exit status.
+Vagrant assumes that this means the command failed!
+
+umount /mnt
+
+Stdout from the command:
+
+
+
+Stderr from the command:
+
+umount: /mnt: not mounted.
+
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ vagrant status
+Current machine states:
+
+app1                      running (virtualbox)
+app2                      not created (virtualbox)
+db                        not created (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ ansible app1 -m ping
+[WARNING]: Could not match supplied host pattern, ignoring: app1
+[WARNING]: No hosts matched, nothing to do
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ ansible app -m ping
+192.168.60.4 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.60.4 port 22: No route to host",
+    "unreachable": true
+}
+192.168.60.5 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.60.5 port 22: No route to host",
+    "unreachable": true
+}
+(base) glenn@t3600:~/src/github.com/glennoph/ansible-devops/ch03$ ansible app -a "hostname"
+192.168.60.5 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.60.5 port 22: No route to host",
+    "unreachable": true
+}
+192.168.60.4 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.60.4 port 22: No route to host",
+    "unreachable": true
+}
+
+
+** update
+
+sudo apt-get install virtualbox-guest-additions-iso
+
+vagrant plugin install vagrant-cachier
+vagrant plugin install vagrant-faster
+vagrant plugin uninstall vagrant-cachier
+vagrant plugin uninstall vagrant-faster
+
+vagrant plugin install vagrant-vbguest
+
+vagrant up
+...
+vagrant status
+
+Current machine states:
+
+app1                      running (virtualbox)
+app2                      running (virtualbox)
+db                        running (virtualbox)
+
+
+ansible multi -a "hostname"
+192.168.60.4 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nIT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!\r\nSomeone could be eavesdropping on you right now (man-in-the-middle attack)!\r\nIt is also possible that a host key has just been changed.\r\nThe fingerprint for the ECDSA key sent by the remote host is\nSHA256:s/ucRQFJdG6pN74gPdCeEs2FRS9pK2j3x7di/q+1jaY.\r\nPlease contact your system administrator.\r\nAdd correct host key in /home/glenn/.ssh/known_hosts to get rid of this message.\r\nOffending ECDSA key in /home/glenn/.ssh/known_hosts:6\r\n  remove with:\r\n  ssh-keygen -f \"/home/glenn/.ssh/known_hosts\" -R \"192.168.60.4\"\r\nECDSA host key for 192.168.60.4 has changed and you have requested strict checking.\r\nHost key verification failed.",
+    "unreachable": true
+}
+192.168.60.5 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nIT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!\r\nSomeone could be eavesdropping on you right now (man-in-the-middle attack)!\r\nIt is also possible that a host key has just been changed.\r\nThe fingerprint for the ECDSA key sent by the remote host is\nSHA256:s/ucRQFJdG6pN74gPdCeEs2FRS9pK2j3x7di/q+1jaY.\r\nPlease contact your system administrator.\r\nAdd correct host key in /home/glenn/.ssh/known_hosts to get rid of this message.\r\nOffending ECDSA key in /home/glenn/.ssh/known_hosts:5\r\n  remove with:\r\n  ssh-keygen -f \"/home/glenn/.ssh/known_hosts\" -R \"192.168.60.5\"\r\nECDSA host key for 192.168.60.5 has changed and you have requested strict checking.\r\nHost key verification failed.",
+    "unreachable": true
+}
+192.168.60.6 | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\n@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @\r\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\r\nIT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!\r\nSomeone could be eavesdropping on you right now (man-in-the-middle attack)!\r\nIt is also possible that a host key has just been changed.\r\nThe fingerprint for the ECDSA key sent by the remote host is\nSHA256:s/ucRQFJdG6pN74gPdCeEs2FRS9pK2j3x7di/q+1jaY.\r\nPlease contact your system administrator.\r\nAdd correct host key in /home/glenn/.ssh/known_hosts to get rid of this message.\r\nOffending ECDSA key in /home/glenn/.ssh/known_hosts:7\r\n  remove with:\r\n  ssh-keygen -f \"/home/glenn/.ssh/known_hosts\" -R \"192.168.60.6\"\r\nECDSA host key for 192.168.60.6 has changed and you have requested strict checking.\r\nHost key verification failed.",
+    "unreachable": true
+}
