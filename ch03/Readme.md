@@ -21,9 +21,32 @@
    
    
 4. Ad hoc command: 
-   ` ansible multi -a "hostname"`
+```
+	export ANSIBLE_HOST_KEY_CHECKING=False
+	ansible multi -a "hostname"
+		
+	ansible multi -a "free -h"
+	
+```
+
    
-   * result:  `192.168.60.4 | UNREACHABLE!` 
+   * result:  
+```   
+   192.168.60.5 | CHANGED | rc=0 >>
+orc-app2.test
+[DEPRECATION WARNING]: Distribution centos 8.2.2004 on host 192.168.60.4 should use /usr/libexec/platform-python, but is using /usr/bin/python for backward compatibility with 
+prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See 
+https://docs.ansible.com/ansible/2.10/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+192.168.60.4 | CHANGED | rc=0 >>
+orc-app1.test
+[DEPRECATION WARNING]: Distribution centos 8.2.2004 on host 192.168.60.6 should use /usr/libexec/platform-python, but is using /usr/bin/python for backward compatibility with 
+prior Ansible releases. A future Ansible release will default to using the discovered platform python for this host. See 
+https://docs.ansible.com/ansible/2.10/reference_appendices/interpreter_discovery.html for more information. This feature will be removed in version 2.12. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+192.168.60.6 | CHANGED | rc=0 >>
+orc-db.test
+```
    
    
 ## clean
