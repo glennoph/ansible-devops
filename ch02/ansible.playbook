@@ -10,8 +10,14 @@
 
   - name: ensure chrony is running
     service:
-      name: chrony
+      name: chronyd
       state: started
       enabled: yes
 
-      
+  - name: ensure ntp is installed
+    yum: name=ntp state=present
+
+  - name: ensure ntp is running
+    service: name=ntpd state=started enabled=yes
+
+    

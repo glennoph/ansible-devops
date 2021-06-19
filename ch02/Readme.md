@@ -1,4 +1,5 @@
 # ch02 first ansible playbook with vagrant
+* [ansible 101 episode 1](https://www.youtube.com/watch?v=goclfp6a2IQ&t=2197s)
 
 ## prep
 0. install Ansible
@@ -32,20 +33,20 @@ https://www.virtualbox.org/wiki/Downloads
 3. if there are errors, then run
    `vagrant provision`
    
-   ==> default: Running provisioner: ansible...
-`playbook` does not exist on the host: /home/glenn/src/github.com/glennoph/ansible-devops/ch02/ansible.playbook
-   
-   * Messages
-```
+```   
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [default]
+
+TASK [ensure chrony is installed] **********************************************
+ok: [default]
+
 TASK [ensure chrony is running] ************************************************
-fatal: [default]: FAILED! => {"changed": false, "msg": "Could not find the requested service chrony: host"}
+ok: [default]
 
 PLAY RECAP *********************************************************************
-default                    : ok=2    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
-
-Ansible failed to complete successfully. Any error output should be
-visible above. Please fix these errors and try again.
-
+default                    : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
    
    
