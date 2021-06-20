@@ -81,13 +81,14 @@ orc-app2.test
    * Set fork to 1 - so the commands are not run in parallel
    `ansible multi  -a 'hostname' -f 1`
 
->  192.168.60.4 | CHANGED | rc=0 >>
->  orc-app1.test
->  192.168.60.5 | CHANGED | rc=0 >>
->  orc-app2.test
->  192.168.60.6 | CHANGED | rc=0 >>
->  orc-db.test
-
+```
+192.168.60.4 | CHANGED | rc=0 >>
+orc-app1.test
+192.168.60.5 | CHANGED | rc=0 >>
+orc-app2.test
+192.168.60.6 | CHANGED | rc=0 >>
+orc-db.test
+```
    
 ## clean
 
