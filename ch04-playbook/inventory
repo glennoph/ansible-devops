@@ -1,0 +1,14 @@
+# inventory
+#[solr]
+#192.168.60.7 # ip from Vagrantfile
+solr ansible_ssh_host=192.168.60.7 ansible_ssh_port=22 ansible_user=solr
+
+# # group with all servers
+# [multi:children]
+# solr
+# 
+# [multi:vars]
+# #ansible_ssh_user=vagrant ## changed
+# ansible_user=vagrant
+# ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+

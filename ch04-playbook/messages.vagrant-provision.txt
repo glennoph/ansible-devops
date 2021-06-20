@@ -1,0 +1,11 @@
+==> solr: Running provisioner: ansible...
+    solr: Running ansible-playbook...
+
+PLAY [solr] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+fatal: [solr]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Warning: Permanently added '192.168.60.7' (ECDSA) to the list of known hosts.\r\nvagrant@192.168.60.7: Permission denied (publickey,password).", "unreachable": true}
+
+PLAY RECAP *********************************************************************
+solr                       : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+

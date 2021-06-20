@@ -1,0 +1,47 @@
+---
+- hosts: all
+  become: true
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: update apt cache as needed.
+      apt: update_cache=true cache_valid_time=3600
+
+  handlers:
+    - name: restart solr
+      service: name=solr state=restarted
+      
+  tasks:
+    - name: install java 11
+      apt: name=openjdk-11-jdk state=present
+
+    - name: download solr
+      get_url:
+        url: "{{download_prefix}}/{{solr_version}}/solr-{{solr_version}}.tgz"
+        dest: "{{ download_dir }}/solr-{{solr_version}}.tgz"
+        checksum: "{{ solr_checksum }}"
+
+    - name: expand solr.
+      unarchive:
+        src: "{{download_dir}}/solr-{{solr_version}}.tgz"
+        dest: "{{download_dir}}"
+        remote_src: true  # archive is on the server
+        creates: "{{download_dir}}/solr-{{solr_version}}/README.txt"
+
+    - name: run solr install script.
+      command: >
+        {{download_dir}}/solr-{{solr_version}}/bin/install_solr_service.sh
+        {{download_dir}}/solr-{{solr_version}}.tgz
+        -i /opt
+        -d /var/solr
+        -u solr
+        -s solr
+        -p 8983
+        creates={{solr_dir}}/bin/solr
+
+    - name: ensure solr is started and on boot.
+      service: name=solr state=started enabled=yes
+
+      
