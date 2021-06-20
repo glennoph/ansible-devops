@@ -1,6 +1,5 @@
 # ch03 ad hoc commands
 
-## prep
 1. Setup:
    * Vagrantfile 
    * Ansible
@@ -19,6 +18,7 @@ vagrant status
 ```   
    
 4. Ad hoc command: 
+
 ```
 ansible multi -i inventory -a "hostname" ## do ont use inventory file
 
@@ -57,7 +57,8 @@ orc-app2.test
 
 ```
    * Ad Hoc command table 
-     `ansible multi -a 'hostname'`
+ 
+ `ansible multi -a 'hostname'`
    
    
 | Command  | Use                     |
@@ -80,20 +81,22 @@ orc-app2.test
    * Set fork to 1 - so the commands are not run in parallel
    `ansible multi  -a 'hostname' -f 1`
 
-  192.168.60.4 | CHANGED | rc=0 >>
-  orc-app1.test
-  192.168.60.5 | CHANGED | rc=0 >>
-  orc-app2.test
-  192.168.60.6 | CHANGED | rc=0 >>
-  orc-db.test
+>  192.168.60.4 | CHANGED | rc=0 >>
+>  orc-app1.test
+>  192.168.60.5 | CHANGED | rc=0 >>
+>  orc-app2.test
+>  192.168.60.6 | CHANGED | rc=0 >>
+>  orc-db.test
 
    
 ## clean
 
 * halt vm
-  `vagrant halt`
+
+`vagrant halt`
   
 * remove vm - force
-  `vagrant destroy -f`
+
+`vagrant destroy -f`
   
   
